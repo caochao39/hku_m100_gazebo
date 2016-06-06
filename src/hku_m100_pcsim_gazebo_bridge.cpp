@@ -84,7 +84,7 @@ void velocityCallback(const dji_sdk::Velocity::ConstPtr& velocity_msg)
 void localPositionCallback(const dji_sdk::LocalPosition::ConstPtr& position_msg)
 {
   target_pose.position.x = position_msg->x;
-  target_pose.position.y = position_msg->y;
+  target_pose.position.y = -position_msg->y;
   target_pose.position.z = position_msg->z;
 
   position_updated = true;
