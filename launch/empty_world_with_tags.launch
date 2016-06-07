@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find hku_m100_gazebo)/launch/start.launch">
+   <arg name="world" value="$(find hector_gazebo_worlds)/worlds/rolling_landscape_120m.world"/> 
+  </include>
+
+</launch>

@@ -3,8 +3,11 @@
 <launch>
    
   <!-- Start Gazebo with wg world running in (max) realtime -->
-  <include file="$(find hector_gazebo_worlds)/launch/rolling_landscape_120m.launch"/>
+  <!-- <include file="$(find hector_gazebo_worlds)/launch/rolling_landscape_120m.launch"/> -->
   <!-- <include file="$(find gazebo_ros)/launch/empty_world.launch"/>  -->
+   <include file="$(find hector_gazebo_worlds)/launch/start.launch">
+      <arg name="world" value="$(find hku_m100_gazebo)/worlds/empty_world_with_tags.world"/> 
+   </include>
 
   <!-- Spawn simulated quadrotor uav -->
   <include file="$(find hku_m100_gazebo)/launch/spawn_hku_m100.launch" >

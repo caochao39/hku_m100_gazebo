@@ -1,0 +1,305 @@
+material Tags/marker13
+{
+  receive_shadows off
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture marker13.png
+      }
+    }
+  }
+}
+
+material Tags/markers9to17
+{
+  receive_shadows off
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture markers9to17.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00000
+{
+  receive_shadows off
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00000.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00001
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00001.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00002
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00002.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00003
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00003.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00004
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00004.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00005
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00005.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00006
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00006.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00007
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00007.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00008
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00008.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00009
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00009.png
+      }
+    }
+  }
+}
+
+material Tags/Tag36_11_00010
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture tag36_11_00010.png
+      }
+    }
+  }
+}
+
+material Tags/Chessboard
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture chessboard.png
+      }
+    }
+  }
+}
+
+material Tags/Marker290
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture aruco/marker290.png
+      }
+    }
+  }
+}
+
+material Tags/Marker318
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture aruco/marker318.png
+      }
+    }
+  }
+}
+
+material Tags/Marker354
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture aruco/marker354.png
+      }
+    }
+  }
+}
+
+material Tags/Marker462
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture aruco/marker462.png
+      }
+    }
+  }
+}
