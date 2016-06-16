@@ -50,7 +50,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1.000000 1.000000 1.000000</size>
+              <size>1.000000 1.000000 1.00000</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -73,7 +73,7 @@
           <material>
             <script>
               <uri>file://Media/materials/scripts/tags.material</uri>
-              <name>Tags/markers9to17</name>
+              <name>Tags/Tag36_11_00006</name>
             </script>
           </material>
         </visual>

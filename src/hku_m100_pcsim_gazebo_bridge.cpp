@@ -39,8 +39,8 @@ bool position_updated = false;
 
 void attitudeQuaternionCallback(const dji_sdk::AttitudeQuaternion::ConstPtr& attitude_quaternion_msg)
 {
-  target_pose.orientation.w = attitude_quaternion_msg->q0;
-  target_pose.orientation.x = attitude_quaternion_msg->q1;
+  target_pose.orientation.w = -attitude_quaternion_msg->q0;
+  target_pose.orientation.x = -attitude_quaternion_msg->q1;
   target_pose.orientation.y = attitude_quaternion_msg->q2;
   target_pose.orientation.z = attitude_quaternion_msg->q3;
 
