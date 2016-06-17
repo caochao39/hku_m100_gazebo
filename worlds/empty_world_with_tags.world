@@ -34,7 +34,7 @@
       <cast_shadows>false</cast_shadows>
     </light>
     <model name='unit_box_yellow'>
-      <pose>3.000000 2.000000 3.000000 0.000000 0.000000 0.000000</pose>
+      <pose>3.000000 2.000000 0.000000 0.000000 0.000000 0.000000</pose>
       <link name='link'>
         <inertial>
           <mass>1.000000</mass>
@@ -50,7 +50,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>1.000000 1.000000 1.00000</size>
+              <size>1.000000 1.000000 0.010000</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -67,7 +67,7 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>1.000000 1.000000 1.000000</size>
+              <size>1.000000 1.000000 0.010000</size>
             </box>
           </geometry>
           <material>

@@ -8,33 +8,55 @@
 #include <dji_sdk/LocalPosition.h>
 #include <dji_sdk/Velocity.h>
 #include <dji_sdk/LocalPosition.h>
+#include <dji_sdk/Gimbal.h>
+
 
 #include <gazebo_msgs/ModelState.h>
+#include <gazebo_msgs/LinkState.h>
 #include <gazebo_msgs/SetModelState.h>
+#include <gazebo_msgs/SetLinkState.h>
 
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Twist.h>
+
+#include <tf/LinearMath/Quaternion.h>
 
 #include <string>
 
 
 geometry_msgs::Pose target_pose;
 geometry_msgs::Twist target_twist;
+geometry_msgs::Pose target_gimbal_pose;
+geometry_msgs::Twist target_gimbal_twist;
+
 gazebo_msgs::ModelState target_model_state;
+gazebo_msgs::LinkState target_gimbal_state;
 
 std::string model_name = "hku_m100";
 std::string reference_frame = "world";
 
+std::string gimbal_link_name = "camera_link";
+std::string gimbal_reference_frame = "base_link";
+
 ros::Subscriber attitude_quaternion_subscriber;
 ros::Subscriber velocity_subscriber;
 ros::Subscriber local_position_subscriber;
+ros::Subscriber gimbal_orientation_subscriber;
 
 ros::ServiceClient model_state_client;
+ros::ServiceClient gimbal_state_client;
 
 gazebo_msgs::SetModelState set_model_state;
+gazebo_msgs::SetLinkState set_link_state;
 
 bool velocity_updated = false;
 bool position_updated = false;
+
+double gimbal_pitch;
+double gimbal_yaw;
+double gimbal_roll;
+
+tf::Quaternion gimbal_q;
 
 
 void attitudeQuaternionCallback(const dji_sdk::AttitudeQuaternion::ConstPtr& attitude_quaternion_msg)
@@ -92,6 +114,46 @@ void localPositionCallback(const dji_sdk::LocalPosition::ConstPtr& position_msg)
 
 }
 
+
+void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientation_msg)
+{
+  gimbal_pitch = gimbal_orientation_msg->pitch;
+  gimbal_yaw = gimbal_orientation_msg->yaw;
+  gimbal_roll = gimbal_orientation_msg->roll;
+
+  gimbal_q.setEuler(gimbal_yaw, gimbal_pitch, gimbal_roll);
+
+  target_gimbal_pose.orientation.w = gimbal_q.w();
+  target_gimbal_pose.orientation.x = gimbal_q.x();
+  target_gimbal_pose.orientation.y = gimbal_q.y();
+  target_gimbal_pose.orientation.z = gimbal_q.z();
+
+  target_gimbal_pose.position.x = 0.027;
+  target_gimbal_pose.position.y = 0.0;
+  target_gimbal_pose.position.z = -0.027;
+
+
+  target_gimbal_twist.angular.x = 0;
+  target_gimbal_twist.angular.y = 0;
+  target_gimbal_twist.angular.z = 0;
+  target_gimbal_twist.linear.x = 0;
+  target_gimbal_twist.linear.y = 0;
+  target_gimbal_twist.linear.z = 0;
+
+
+  if(gimbal_state_client)
+  {
+    target_gimbal_state.link_name = gimbal_link_name;
+    target_gimbal_state.reference_frame = gimbal_reference_frame;
+    target_gimbal_state.pose = target_gimbal_pose;
+    target_gimbal_state.twist = target_gimbal_twist;
+    set_link_state.request.link_state = target_gimbal_state;
+    gimbal_state_client.call(set_link_state);
+  }
+
+
+}
+
 int main(int argc, char **argv)
 {
 
@@ -103,10 +165,24 @@ int main(int argc, char **argv)
   attitude_quaternion_subscriber = n.subscribe("/dji_sdk/attitude_quaternion", 1000, attitudeQuaternionCallback);
   velocity_subscriber = n.subscribe("/dji_sdk/velocity", 1000, velocityCallback);
   local_position_subscriber = n.subscribe("/dji_sdk/local_position", 1000, localPositionCallback);
+  gimbal_orientation_subscriber = n.subscribe("/dji_sdk/gimbal", 1000, gimbalOrientationCallback);
 
   model_state_client = n.serviceClient<gazebo_msgs::SetModelState>("/gazebo/set_model_state", true);
+  gimbal_state_client = n.serviceClient<gazebo_msgs::SetLinkState>("gazebo/set_link_state", true);
 
   ROS_INFO("Bridge between PC sim and gazebo connected");
+
+  while(ros::ok())
+  {
+    ros::spinOnce();
+
+    
+
+    
+  }
+
+
+
 
   ros::spin();
 
