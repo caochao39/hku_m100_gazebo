@@ -21,6 +21,8 @@
 
 #include <tf/LinearMath/Quaternion.h>
 
+#include <cmath>
+
 #include <string>
 
 
@@ -72,24 +74,7 @@ void attitudeQuaternionCallback(const dji_sdk::AttitudeQuaternion::ConstPtr& att
 
   // std::cout << "attitude callback get called" << std::endl;
 
-  if(velocity_updated == true && position_updated == true)
-  {
-    if(model_state_client)
-    {
-      target_model_state.model_name = model_name;
-      target_model_state.reference_frame = reference_frame;
-      target_model_state.pose = target_pose;
-      target_model_state.twist = target_twist;
-      set_model_state.request.model_state = target_model_state;
-      model_state_client.call(set_model_state);
-      // std::cout << "service called" << std::endl;
-    }
-    else
-    {
-      //TODO: change to ROS_ERROR
-      // std::cout << "connection with service lost!!" << std::endl;
-    }
-  }
+  
 }
 
 void velocityCallback(const dji_sdk::Velocity::ConstPtr& velocity_msg)
@@ -121,16 +106,17 @@ void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientati
   gimbal_yaw = gimbal_orientation_msg->yaw;
   gimbal_roll = gimbal_orientation_msg->roll;
 
-  gimbal_q.setEuler(gimbal_yaw, gimbal_pitch, gimbal_roll);
+  //roll pitch yaw
+  gimbal_q.setEuler(-gimbal_pitch / 180 * M_PI, -gimbal_roll / 180 * M_PI, gimbal_yaw / 180 * M_PI);
 
   target_gimbal_pose.orientation.w = gimbal_q.w();
   target_gimbal_pose.orientation.x = gimbal_q.x();
   target_gimbal_pose.orientation.y = gimbal_q.y();
   target_gimbal_pose.orientation.z = gimbal_q.z();
 
-  target_gimbal_pose.position.x = 0.027;
+  target_gimbal_pose.position.x = 0.1;
   target_gimbal_pose.position.y = 0.0;
-  target_gimbal_pose.position.z = -0.027;
+  target_gimbal_pose.position.z = -0.04;
 
 
   target_gimbal_twist.angular.x = 0;
@@ -139,17 +125,6 @@ void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientati
   target_gimbal_twist.linear.x = 0;
   target_gimbal_twist.linear.y = 0;
   target_gimbal_twist.linear.z = 0;
-
-
-  if(gimbal_state_client)
-  {
-    target_gimbal_state.link_name = gimbal_link_name;
-    target_gimbal_state.reference_frame = gimbal_reference_frame;
-    target_gimbal_state.pose = target_gimbal_pose;
-    target_gimbal_state.twist = target_gimbal_twist;
-    set_link_state.request.link_state = target_gimbal_state;
-    gimbal_state_client.call(set_link_state);
-  }
 
 
 }
@@ -172,19 +147,45 @@ int main(int argc, char **argv)
 
   ROS_INFO("Bridge between PC sim and gazebo connected");
 
+  ros::Rate spin_rate(200);
+
   while(ros::ok())
   {
     ros::spinOnce();
 
+    if(model_state_client)
+    {
+      target_model_state.model_name = model_name;
+      target_model_state.reference_frame = reference_frame;
+      target_model_state.pose = target_pose;
+      target_model_state.twist = target_twist;
+      set_model_state.request.model_state = target_model_state;
+      model_state_client.call(set_model_state);
+      // std::cout << "service called" << std::endl;
+    }
+    else
+    {
+      //TODO: change to ROS_ERROR
+      // std::cout << "connection with service lost!!" << std::endl;
+      ROS_INFO("update model state failed.");
+    }
     
+    // if(gimbal_state_client)
+    // {
+    //   target_gimbal_state.link_name = gimbal_link_name;
+    //   target_gimbal_state.reference_frame = gimbal_reference_frame;
+    //   target_gimbal_state.pose = target_gimbal_pose;
+    //   target_gimbal_state.twist = target_gimbal_twist;
+    //   set_link_state.request.link_state = target_gimbal_state;
+    //   gimbal_state_client.call(set_link_state);
+    // }
+    // else
+    // {
+    //   ROS_INFO("update gimbal state failed.");
+    // }
 
-    
+    spin_rate.sleep();
   }
-
-
-
-
-  ros::spin();
 
   return 0;
 }
