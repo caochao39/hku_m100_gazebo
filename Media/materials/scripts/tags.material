@@ -303,3 +303,21 @@ material Tags/Marker462
     }
   }
 }
+
+material Tags/LandingTarget
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture landing_target.png
+      }
+    }
+  }
+}
+
