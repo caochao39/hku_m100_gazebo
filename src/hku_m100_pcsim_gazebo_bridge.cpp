@@ -107,7 +107,7 @@ void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientati
   gimbal_roll = gimbal_orientation_msg->roll;
 
   //roll pitch yaw
-  gimbal_q.setEuler(-gimbal_pitch / 180 * M_PI, -gimbal_roll / 180 * M_PI, gimbal_yaw / 180 * M_PI);
+  gimbal_q.setEuler(-gimbal_pitch / 180 * M_PI, gimbal_roll / 180 * M_PI, -gimbal_yaw / 180 * M_PI);
 
   target_gimbal_pose.orientation.w = gimbal_q.w();
   target_gimbal_pose.orientation.x = gimbal_q.x();
@@ -170,19 +170,19 @@ int main(int argc, char **argv)
       ROS_INFO("update model state failed.");
     }
     
-    // if(gimbal_state_client)
-    // {
-    //   target_gimbal_state.link_name = gimbal_link_name;
-    //   target_gimbal_state.reference_frame = gimbal_reference_frame;
-    //   target_gimbal_state.pose = target_gimbal_pose;
-    //   target_gimbal_state.twist = target_gimbal_twist;
-    //   set_link_state.request.link_state = target_gimbal_state;
-    //   gimbal_state_client.call(set_link_state);
-    // }
-    // else
-    // {
-    //   ROS_INFO("update gimbal state failed.");
-    // }
+    if(gimbal_state_client)
+    {
+      target_gimbal_state.link_name = gimbal_link_name;
+      target_gimbal_state.reference_frame = gimbal_reference_frame;
+      target_gimbal_state.pose = target_gimbal_pose;
+      target_gimbal_state.twist = target_gimbal_twist;
+      set_link_state.request.link_state = target_gimbal_state;
+      gimbal_state_client.call(set_link_state);
+    }
+    else
+    {
+      ROS_INFO("update gimbal state failed.");
+    }
 
     spin_rate.sleep();
   }
