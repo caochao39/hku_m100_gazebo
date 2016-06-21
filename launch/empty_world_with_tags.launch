@@ -5,13 +5,14 @@
   <!-- Start Gazebo with wg world running in (max) realtime -->
    <include file="$(find hector_gazebo_worlds)/launch/start.launch">
       <!-- <arg name="world" value="$(find hku_m100_gazebo)/worlds/empty_world_with_tags.world"/>  -->
-      <arg name="world" value="$(find hku_m100_gazebo)/worlds/vehicle_with_offset_tag.world"/>
+      <!-- <arg name="world" value="$(find hku_m100_gazebo)/worlds/vehicle_with_offset_tag.world"/> -->
+      <arg name="world" value="$(find hku_m100_gazebo)/worlds/vehicle_with_drone.world"/>
    </include>
 
   <!-- Spawn simulated quadrotor uav -->
-  <include file="$(find hku_m100_gazebo)/launch/spawn_hku_m100.launch" >
+<!--   <include file="$(find hku_m100_gazebo)/launch/spawn_hku_m100.launch" >
     <arg name="model" value="$(find hku_m100_description)/urdf/hku_m100.urdf.xacro"/> 
-  </include>
+  </include> -->
   
   <!-- <node name="hku_m100_pcsim_gazebo_bridge" pkg="hku_m100_gazebo" type="hku_m100_pcsim_gazebo_bridge" respawn="true" /> -->
   <!-- Start rviz visualization with preset config -->

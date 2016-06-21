@@ -31,14 +31,23 @@ geometry_msgs::Twist target_twist;
 geometry_msgs::Pose target_gimbal_pose;
 geometry_msgs::Twist target_gimbal_twist;
 
+geometry_msgs::Pose target_roll_pose;
+geometry_msgs::Pose target_yaw_pose;
+geometry_msgs::Pose target_pitch_pose;
+
+
 gazebo_msgs::ModelState target_model_state;
 gazebo_msgs::LinkState target_gimbal_state;
 
 std::string model_name = "hku_m100";
 std::string reference_frame = "world";
 
-std::string gimbal_link_name = "camera_link";
+// std::string gimbal_link_name = "camera_link";
 std::string gimbal_reference_frame = "base_link";
+std::string gimbal_virtual_link_name = "gimbal_link";
+std::string gimbal_roll_link_name = "roll_link";
+std::string gimbal_pitch_link_name = "pitch_link";
+std::string gimbal_yaw_link_name = "yaw_link";
 
 ros::Subscriber attitude_quaternion_subscriber;
 ros::Subscriber velocity_subscriber;
@@ -59,6 +68,11 @@ double gimbal_yaw;
 double gimbal_roll;
 
 tf::Quaternion gimbal_q;
+
+tf::Quaternion gimbal_roll_q;
+tf::Quaternion gimbal_yaw_q;
+tf::Quaternion gimbal_pitch_q;
+
 
 
 void attitudeQuaternionCallback(const dji_sdk::AttitudeQuaternion::ConstPtr& attitude_quaternion_msg)
@@ -113,6 +127,27 @@ void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientati
   target_gimbal_pose.orientation.x = gimbal_q.x();
   target_gimbal_pose.orientation.y = gimbal_q.y();
   target_gimbal_pose.orientation.z = gimbal_q.z();
+
+
+  gimbal_roll_q.setEuler(0, gimbal_roll / 180 * M_PI, 0);
+  gimbal_yaw_q.setEuler(0, 0, -gimbal_yaw / 180 * M_PI);
+  gimbal_pitch_q.setEuler(-gimbal_pitch / 180 * M_PI, 0, 0);
+
+
+  target_roll_pose.orientation.w = gimbal_roll_q.w();
+  target_roll_pose.orientation.x = gimbal_roll_q.x();
+  target_roll_pose.orientation.y = gimbal_roll_q.y();
+  target_roll_pose.orientation.z = gimbal_roll_q.z();
+
+  target_yaw_pose.orientation.w = gimbal_yaw_q.w();
+  target_yaw_pose.orientation.x = gimbal_yaw_q.x();
+  target_yaw_pose.orientation.y = gimbal_yaw_q.y();
+  target_yaw_pose.orientation.z = gimbal_yaw_q.z();
+
+  target_pitch_pose.orientation.w = gimbal_pitch_q.w();
+  target_pitch_pose.orientation.x = gimbal_pitch_q.x();
+  target_pitch_pose.orientation.y = gimbal_pitch_q.y();
+  target_pitch_pose.orientation.z = gimbal_pitch_q.z();
 
   target_gimbal_pose.position.x = 0.1;
   target_gimbal_pose.position.y = 0.0;
@@ -172,9 +207,30 @@ int main(int argc, char **argv)
     
     if(gimbal_state_client)
     {
-      target_gimbal_state.link_name = gimbal_link_name;
-      target_gimbal_state.reference_frame = gimbal_reference_frame;
-      target_gimbal_state.pose = target_gimbal_pose;
+      // target_gimbal_state.link_name = gimbal_link_name;
+      // target_gimbal_state.reference_frame = gimbal_reference_frame;
+      // target_gimbal_state.pose = target_gimbal_pose;
+      // target_gimbal_state.twist = target_gimbal_twist;
+      // set_link_state.request.link_state = target_gimbal_state;
+      // gimbal_state_client.call(set_link_state);
+
+      target_gimbal_state.link_name = gimbal_yaw_link_name;
+      target_gimbal_state.reference_frame = gimbal_virtual_link_name;
+      target_gimbal_state.pose = target_yaw_pose;
+      target_gimbal_state.twist = target_gimbal_twist;
+      set_link_state.request.link_state = target_gimbal_state;
+      gimbal_state_client.call(set_link_state);
+
+      target_gimbal_state.link_name = gimbal_roll_link_name;
+      target_gimbal_state.reference_frame = gimbal_yaw_link_name;
+      target_gimbal_state.pose = target_roll_pose;
+      target_gimbal_state.twist = target_gimbal_twist;
+      set_link_state.request.link_state = target_gimbal_state;
+      gimbal_state_client.call(set_link_state);
+
+      target_gimbal_state.link_name = gimbal_pitch_link_name;
+      target_gimbal_state.reference_frame = gimbal_roll_link_name;
+      target_gimbal_state.pose = target_pitch_pose;
       target_gimbal_state.twist = target_gimbal_twist;
       set_link_state.request.link_state = target_gimbal_state;
       gimbal_state_client.call(set_link_state);
