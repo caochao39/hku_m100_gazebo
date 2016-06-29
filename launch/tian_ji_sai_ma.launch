@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<launch>
+   
+  <!-- Start Gazebo with wg world running in (max) realtime -->
+   <include file="$(find hku_m100_gazebo)/launch/start.launch">
+      <!-- <arg name="world" value="$(find hku_m100_gazebo)/worlds/empty_world_with_tags.world"/>  -->
+      <!-- <arg name="world" value="$(find hku_m100_gazebo)/worlds/vehicle_with_offset_tag.world"/> -->
+      <arg name="world" value="$(find hku_m100_gazebo)/worlds/tian_ji_sai_ma.world"/>
+   </include>
+
+  <!-- Spawn simulated quadrotor uav -->
+<!--   <include file="$(find hku_m100_gazebo)/launch/spawn_hku_m100.launch" >
+    <arg name="model" value="$(find hku_m100_description)/urdf/hku_m100.urdf.xacro"/> 
+  </include> -->
+  
+  <!-- <node name="hku_m100_pcsim_gazebo_bridge" pkg="hku_m100_gazebo" type="hku_m100_pcsim_gazebo_bridge" respawn="true" /> -->
+  <!-- Start rviz visualization with preset config -->
+  <!--<node pkg="rviz" type="rviz" name="rviz" args="-d $(find hector_quadrotor_demo)/rviz_cfg/outdoor_flight.rviz"/>-->
+
+  <!-- Start joystick teleop -->
+  <!--<include file="$(find hector_quadrotor_teleop)/launch/joystick.launch"/>-->
+
+  <!--
+	<arg name="marker_size" default="27.2" />
+	<arg name="max_new_marker_error" default="0.08" />
+	<arg name="max_track_error" default="0.2" />
+	<arg name="cam_image_topic" default="/front_cam/camera/image" />
+	<arg name="cam_info_topic" default="/front_cam/camera/camera_info" />	
+	<arg name="output_frame" default="/front_cam_link" />
+	-->
+  
+  <!--
+	<node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen" args="$(arg marker_size) $(arg max_new_marker_error) $(arg max_track_error) $(arg cam_image_topic) $(arg cam_info_topic) $(arg output_frame)" />
+	-->
+
+</launch>
