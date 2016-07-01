@@ -566,8 +566,8 @@
             <cameraName>camera</cameraName>
             <alwaysOn>true</alwaysOn>
             <updateRate>10</updateRate>
-            <imageTopicName>/teamhku/image_raw</imageTopicName>
-            <cameraInfoTopicName>/teamhku/camera_info</cameraInfoTopicName>
+            <imageTopicName>/dji_sdk/image_raw</imageTopicName>
+            <cameraInfoTopicName>/dji_sdk/camera_info</cameraInfoTopicName>
             <frameName>camera_optical_frame</frameName>
             <robotNamespace>/</robotNamespace>
           </plugin>
