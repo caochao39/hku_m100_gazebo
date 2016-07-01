@@ -20,6 +20,8 @@
 #include <geometry_msgs/Twist.h>
 
 #include <tf/LinearMath/Quaternion.h>
+#include <tf/LinearMath/Matrix3x3.h>
+#include <tf/LinearMath/Vector3.h>
 
 #include <cmath>
 
@@ -30,6 +32,9 @@ geometry_msgs::Pose target_pose;
 geometry_msgs::Twist target_twist;
 geometry_msgs::Pose target_gimbal_pose;
 geometry_msgs::Twist target_gimbal_twist;
+geometry_msgs::Pose car_target_pose;
+geometry_msgs::Twist car_target_twist;
+
 
 geometry_msgs::Pose target_roll_pose;
 geometry_msgs::Pose target_yaw_pose;
@@ -40,7 +45,9 @@ gazebo_msgs::ModelState target_model_state;
 gazebo_msgs::LinkState target_gimbal_state;
 
 std::string model_name = "hku_m100";
+std::string car_model_name = "polaris_ranger_xp900";
 std::string reference_frame = "world";
+std::string car_reference_frame = "chassis";
 
 // std::string gimbal_link_name = "camera_link";
 std::string gimbal_reference_frame = "base_link";
@@ -53,9 +60,11 @@ ros::Subscriber attitude_quaternion_subscriber;
 ros::Subscriber velocity_subscriber;
 ros::Subscriber local_position_subscriber;
 ros::Subscriber gimbal_orientation_subscriber;
+ros::Subscriber car_driver_subscriber;
 
 ros::ServiceClient model_state_client;
 ros::ServiceClient gimbal_state_client;
+ros::ServiceClient get_model_state_client;
 
 gazebo_msgs::SetModelState set_model_state;
 gazebo_msgs::SetLinkState set_link_state;
@@ -73,7 +82,12 @@ tf::Quaternion gimbal_roll_q;
 tf::Quaternion gimbal_yaw_q;
 tf::Quaternion gimbal_pitch_q;
 
+tf::Quaternion car_q;
+tf::Quaternion car_next_q;
 
+tf::Matrix3x3 car_ori_m;
+tf::Vector3 car_original_effort_v;
+tf::Vector3 car_rotated_effort_v;
 
 void attitudeQuaternionCallback(const dji_sdk::AttitudeQuaternion::ConstPtr& attitude_quaternion_msg)
 {
@@ -164,6 +178,44 @@ void gimbalOrientationCallback(const dji_sdk::Gimbal::ConstPtr& gimbal_orientati
 
 }
 
+void carPositionCallback(const geometry_msgs::Twist& twist)
+{
+  car_q.setEuler(0, 0, twist.angular.x);
+  car_next_q *= car_q;
+
+  car_ori_m = tf::Matrix3x3(car_next_q);
+  car_original_effort_v = tf::Vector3(twist.linear.x, 0, 0);
+  car_rotated_effort_v = car_ori_m * car_original_effort_v;
+
+
+  car_target_pose.orientation.w = car_next_q.w();
+  car_target_pose.orientation.x = car_next_q.x();
+  car_target_pose.orientation.y = car_next_q.y();
+  car_target_pose.orientation.z = car_next_q.z();
+
+  // car_target_pose.position.x = twist.linear.x;
+  // car_target_pose.position.y = twist.linear.y;
+  // car_target_pose.position.z = twist.linear.z;
+
+  // car_target_pose.orientation.w = 0;
+  // car_target_pose.orientation.x = 0;
+  // car_target_pose.orientation.y = 0;
+  // car_target_pose.orientation.z = 0;
+
+  car_target_pose.position.x = 0;
+  car_target_pose.position.y = 0;
+  car_target_pose.position.z = 0;
+
+  // car_target_twist.linear.x  = twist.linear.x * car_ori_m.getColumn(0).x();
+  // car_target_twist.linear.y  = twist.linear.x * car_ori_m.getColumn(0).y();
+  car_target_twist.linear.x  = car_rotated_effort_v.x();
+  car_target_twist.linear.y  = car_rotated_effort_v.y();
+  car_target_twist.linear.z  = 0;
+  car_target_twist.angular.x  = 0;
+  car_target_twist.angular.y  = 0;
+  car_target_twist.angular.z  = 0;
+}
+
 int main(int argc, char **argv)
 {
 
@@ -176,9 +228,13 @@ int main(int argc, char **argv)
   velocity_subscriber = n.subscribe("/dji_sdk/velocity", 1000, velocityCallback);
   local_position_subscriber = n.subscribe("/dji_sdk/local_position", 1000, localPositionCallback);
   gimbal_orientation_subscriber = n.subscribe("/dji_sdk/gimbal", 1000, gimbalOrientationCallback);
+  car_driver_subscriber = n.subscribe("/car/cmd_vel", 1000, carPositionCallback);
 
   model_state_client = n.serviceClient<gazebo_msgs::SetModelState>("/gazebo/set_model_state", true);
   gimbal_state_client = n.serviceClient<gazebo_msgs::SetLinkState>("gazebo/set_link_state", true);
+
+  car_next_q = tf::Quaternion(0, 0, 0, 1);
+  car_ori_m = tf::Matrix3x3(car_next_q);
 
   ROS_INFO("Bridge between PC sim and gazebo connected");
 
@@ -238,6 +294,16 @@ int main(int argc, char **argv)
     else
     {
       ROS_INFO("update gimbal state failed.");
+    }
+
+    if (model_state_client)
+    {
+      target_model_state.model_name = car_model_name;
+      target_model_state.reference_frame = car_reference_frame;
+      target_model_state.pose = car_target_pose;
+      target_model_state.twist = car_target_twist;
+      set_model_state.request.model_state = target_model_state;
+      model_state_client.call(set_model_state);
     }
 
     spin_rate.sleep();
