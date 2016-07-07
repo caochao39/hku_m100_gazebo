@@ -321,3 +321,19 @@ material Tags/LandingTarget
   }
 }
 
+material Tags/LandingTargetWhole
+{
+  receive_shadows on
+
+  technique
+  {
+    pass
+    {
+      ambient 0.5 0.5 0.5 1.00000
+      texture_unit
+      {
+        texture landing_target_whole.png
+      }
+    }
+  }
+}

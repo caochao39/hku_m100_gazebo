@@ -79,309 +79,6 @@
       <elevation>0</elevation>
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
-    <model name='pioneer2dx'>
-      <link name='chassis'>
-        <pose>0 0 0.16 0 -0 0</pose>
-        <inertial>
-          <mass>5.67</mass>
-          <inertia>
-            <ixx>0.07</ixx>
-            <iyy>0.08</iyy>
-            <izz>0.1</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <box>
-              <size>0.445 0.277 0.17</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <collision name='castor_collision'>
-          <pose>-0.2 0 -0.12 0 -0 0</pose>
-          <geometry>
-            <sphere>
-              <radius>0.04</radius>
-            </sphere>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>0</mu>
-                <mu2>0</mu2>
-                <slip1>1</slip1>
-                <slip2>1</slip2>
-              </ode>
-            </friction>
-            <bounce/>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <pose>0 0 0.04 0 -0 0</pose>
-          <geometry>
-            <mesh>
-              <uri>model://pioneer2dx/meshes/chassis.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <visual name='castor_visual'>
-          <pose>-0.2 0 -0.12 0 -0 0</pose>
-          <geometry>
-            <sphere>
-              <radius>0.04</radius>
-            </sphere>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/FlatBlack</name>
-            </script>
-          </material>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <link name='right_wheel'>
-        <pose>0.1 -0.17 0.11 0 1.5707 1.5707</pose>
-        <inertial>
-          <mass>1.5</mass>
-          <inertia>
-            <ixx>0.0051</ixx>
-            <iyy>0.0051</iyy>
-            <izz>0.009</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <cylinder>
-              <radius>0.11</radius>
-              <length>0.05</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>100000</mu>
-                <mu2>100000</mu2>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-            </friction>
-            <bounce/>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <cylinder>
-              <radius>0.11</radius>
-              <length>0.05</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/FlatBlack</name>
-            </script>
-          </material>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <link name='left_wheel'>
-        <pose>0.1 0.17 0.11 0 1.5707 1.5707</pose>
-        <inertial>
-          <mass>1.5</mass>
-          <inertia>
-            <ixx>0.0051</ixx>
-            <iyy>0.0051</iyy>
-            <izz>0.009</izz>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyz>0</iyz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <cylinder>
-              <radius>0.11</radius>
-              <length>0.05</length>
-            </cylinder>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>100000</mu>
-                <mu2>100000</mu2>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-            </friction>
-            <bounce/>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-          <max_contacts>10</max_contacts>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <cylinder>
-              <radius>0.11</radius>
-              <length>0.05</length>
-            </cylinder>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/FlatBlack</name>
-            </script>
-          </material>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>1</gravity>
-      </link>
-      <link name='landing_target_link'>
-        <pose>0 0 0.3 0 -0 0</pose>
-        <inertial>
-          <mass>1</mass>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <box>
-              <size>0.94 0.66 0.01</size>
-            </box>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <bounce/>
-            <friction>
-              <ode/>
-            </friction>
-            <contact>
-              <ode/>
-            </contact>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <box>
-              <size>0.94 0.66 0.01</size>
-            </box>
-          </geometry>
-          <material>
-            <script>
-              <uri>file://Media/materials/scripts/tags.material</uri>
-              <name>Tags/LandingTarget</name>
-            </script>
-          </material>
-        </visual>
-        <velocity_decay>
-          <linear>0</linear>
-          <angular>0</angular>
-        </velocity_decay>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <gravity>0</gravity>
-      </link>
-      <joint name='landing_target_joint' type='revolute'>
-        <pose>0 0 0 0 -0 0</pose>
-        <child>landing_target_link</child>
-        <parent>chassis</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>0</lower>
-            <upper>0</upper>
-          </limit>
-        </axis>
-      </joint>
-      <joint name='left_wheel_hinge' type='revolute'>
-        <pose>0 0 -0.03 0 -0 0</pose>
-        <child>left_wheel</child>
-        <parent>chassis</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-        </axis>
-      </joint>
-      <joint name='right_wheel_hinge' type='revolute'>
-        <pose>0 0 0.03 0 -0 0</pose>
-        <child>right_wheel</child>
-        <parent>chassis</parent>
-        <axis>
-          <xyz>0 1 0</xyz>
-          <limit>
-            <lower>-1e+16</lower>
-            <upper>1e+16</upper>
-          </limit>
-        </axis>
-      </joint>
-      <plugin name='differential_drive_controller' filename='libgazebo_ros_diff_drive.so'>
-        <alwaysOn>true</alwaysOn>
-        <updateRate>100</updateRate>
-        <leftJoint>left_wheel_hinge</leftJoint>
-        <rightJoint>right_wheel_hinge</rightJoint>
-        <wheelSeparation>0.39</wheelSeparation>
-        <wheelDiameter>0.15</wheelDiameter>
-        <torque>5</torque>
-        <commandTopic>cmd_vel</commandTopic>
-        <odometryTopic>odom</odometryTopic>
-        <odometryFrame>odom</odometryFrame>
-        <robotBaseFrame>chassis</robotBaseFrame>
-      </plugin>
-      <pose>5 5 0 0 -0 0</pose>
-      <static>0</static>
-    </model>
     <state world_name='default'>
       <sim_time>224 232000000</sim_time>
       <real_time>27 884236464</real_time>
@@ -430,33 +127,6 @@
         <link name='yaw_link'>
           <pose>3.09366 3.0036 0.073367 -8e-06 -0.000113 0.033105</pose>
           <velocity>-0.003154 0.002253 -0.002852 0.018449 -0.075596 0.003524</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
-      <model name='pioneer2dx'>
-        <pose>3.19331 -0.870269 3e-06 -5.29396e-23 4e-06 -0.062756</pose>
-        <link name='chassis'>
-          <pose>3.19331 -0.870269 0.160003 -5.29396e-23 4e-06 -0.062756</pose>
-          <velocity>0.000173 0.000169 0.00307 8.5e-05 0.001399 0.000243</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-        <link name='landing_target_link'>
-          <pose>3.19331 -0.870269 0.300003 -5.29396e-23 4e-06 -0.062756</pose>
-          <velocity>0.000366 0.000163 0.003071 8.4e-05 0.001375 0.000273</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-        <link name='left_wheel'>
-          <pose>3.30378 -0.706876 0.110002 1.53645 1.56821 3.0444</pose>
-          <velocity>9.8e-05 0.000155 0.002924 -0.001358 0.001025 0.000558</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-        <link name='right_wheel'>
-          <pose>3.28245 -1.04621 0.110002 1.55765 1.56408 3.06559</pose>
-          <velocity>0.000172 0.000151 0.002911 -0.001319 0.001656 0.00042</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
@@ -2172,8 +1842,8 @@
       </link>
 
 
-      <link name='landing_target_link'>
-        <pose>-1 0 1.23 0 -0 0</pose>
+      <link name='landing_board_link'>
+        <pose>-1.4 0 1.23 0 -0 0</pose>
         <inertial>
           <mass>1</mass>
           <inertia>
@@ -2188,7 +1858,7 @@
         <collision name='collision'>
           <geometry>
             <box>
-              <size>0.94 0.66 0.01</size>
+              <size>1.704 1.656 0.01</size>
             </box>
           </geometry>
           <max_contacts>10</max_contacts>
@@ -2205,13 +1875,13 @@
         <visual name='visual'>
           <geometry>
             <box>
-              <size>0.94 0.66 0.01</size>
+              <size>1.704 1.656 0.01</size>
             </box>
           </geometry>
           <material>
             <script>
               <uri>file://Media/materials/scripts/tags.material</uri>
-              <name>Tags/LandingTarget</name>
+              <name>Tags/LandingTargetWhole</name>
             </script>
           </material>
         </visual>
@@ -2223,9 +1893,10 @@
         <kinematic>0</kinematic>
         <gravity>0</gravity>
       </link>
-      <joint name='landing_target_joint' type='revolute'>
+
+      <joint name='landing_board_joint' type='revolute'>
         <pose>0 0 0 0 -0 0</pose>
-        <child>landing_target_link</child>
+        <child>landing_board_link</child>
         <parent>chassis</parent>
         <axis>
           <xyz>0 1 0</xyz>
@@ -2235,7 +1906,6 @@
           </limit>
         </axis>
       </joint>
-
 
 
       <joint name='front_left_steering_joint' type='revolute'>
