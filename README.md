@@ -21,18 +21,15 @@ Open the gazebo simulation
 
 You should see in the gazebo world a parking Matrice 100 and a truck
 
-![Gazebo world]
-(/images/gazebo.png)
+![Gazebo world](/images/gazebo.png)
 
 Connect the drone in Gazebo with the drone in the PC simulator
 > $ rosrun hku_m100_gazebo hku_m100_pcsim_gazebo_bridge
 
 Control the drone using the DJI remote controller, you should see the drone flying in the gazebo world
 
-![Drone connection]
-(/images/gazebo_drone_in_control.png)
+![Drone connection](/images/gazebo_drone_in_control.png)
 
 You can also play with the gimbal
 
-![Drone connection]
-(/images/gazebo_gimbal.png)
+![Drone connection](/images/gazebo_gimbal.png)
